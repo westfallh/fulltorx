@@ -16,7 +16,7 @@ const korataki = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Full Torx | Website Development Studio",
+  title: "Full Torx",
   description:
     "Full Torx is an interaction design and product studio building high-performance websites and digital products.",
   openGraph: {
@@ -24,6 +24,9 @@ export const metadata: Metadata = {
     description:
       "Interaction design and product services for modern web experiences.",
     type: "website",
+  },
+  icons: {
+    icon: "/fulltorxlogo.png",
   },
 };
 
