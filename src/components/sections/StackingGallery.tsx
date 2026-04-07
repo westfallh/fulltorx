@@ -5,9 +5,60 @@ import { useState } from "react";
 
 import { galleryCards } from "@/data/siteContent";
 
+function ProjectDetailAside({
+  openProject,
+  className,
+}: {
+  openProject: NonNullable<ReturnType<typeof galleryCards.find>>;
+  className: string;
+}) {
+  if (!openProject.project) return null;
+  return (
+    <aside
+      onClick={(event) => event.stopPropagation()}
+      className={className}
+    >
+      <p style={{ margin: 0, textAlign: "center", fontSize: "13px", lineHeight: 1.1 }}>
+        {openProject.project.title}
+      </p>
+      {openProject.project.linkUrl ? (
+        <p style={{ margin: "4px 0 0 0", textAlign: "center", fontSize: "12px", lineHeight: 1.1 }}>
+          <a
+            href={openProject.project.linkUrl}
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: "#2458d3", textDecoration: "underline" }}
+          >
+            {openProject.project.linkLabel ?? openProject.project.linkUrl}
+          </a>
+        </p>
+      ) : null}
+      <p style={{ margin: "12px 0 0 0", fontSize: "12px", lineHeight: 1.25 }}>
+        {openProject.project.description}
+      </p>
+      <p style={{ margin: "18px 0 0 0", textAlign: "center", fontSize: "12px", lineHeight: 1.2 }}>
+        CREDITS
+      </p>
+      <div style={{ marginTop: "6px", display: "grid", gap: "2px" }}>
+        {openProject.project.credits.map((line) => (
+          <p key={line} style={{ margin: 0, fontSize: "12px", lineHeight: 1.2 }}>
+            {line}
+          </p>
+        ))}
+      </div>
+    </aside>
+  );
+}
+
 export function StackingGallery() {
   const [openProjectId, setOpenProjectId] = useState<string | null>(null);
   const openProject = galleryCards.find((card) => card.id === openProjectId && card.project);
+
+  const desktopAsideClass =
+    "absolute right-[5%] bottom-[3%] z-10 w-[min(62vw,520px)] rounded-[24px] bg-white/95 px-6 py-5 text-[#111]";
+
+  const mobileAsideClass =
+    "w-full border-t border-neutral-200/80 bg-white p-5 pb-10 text-[#111]";
 
   return (
     <section>
@@ -93,31 +144,62 @@ export function StackingGallery() {
       {openProject && (
         <div
           onClick={() => setOpenProjectId(null)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 80,
-            background: "rgba(0,0,0,0.18)",
-            display: "grid",
-            placeItems: "center",
-            padding: 0,
-          }}
+          className="fixed inset-0 z-[80] bg-black/[0.18] max-md:overflow-y-auto md:grid md:place-items-center md:overflow-hidden md:bg-black/[0.18]"
         >
+          {/* Mobile: stacked image then copy */}
+          <div className="flex min-h-full w-full flex-col bg-white md:hidden">
+            {openProject.spin3d ? (
+              <div className="flex w-full justify-center px-4 pt-6 pb-4">
+                <div
+                  style={{
+                    background: "linear-gradient(160deg, #e8eefc 0%, #f4f6fb 50%, #dfe8fb 100%)",
+                    borderRadius: "28px",
+                    padding: "clamp(24px, 5vw, 48px) clamp(20px, 4vw, 48px)",
+                    boxShadow: "0 24px 60px rgba(15, 40, 90, 0.12)",
+                  }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={openProject.src ?? ""}
+                    alt={openProject.alt ?? "Varsity"}
+                    style={{
+                      display: "block",
+                      width: "auto",
+                      maxWidth: "min(88vw, 820px)",
+                      maxHeight: "min(50vh, 520px)",
+                      height: "auto",
+                      margin: "0 auto",
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
+              </div>
+            ) : (
+              <Image
+                src={openProject.src ?? ""}
+                alt={openProject.alt ?? "Project image"}
+                width={2105}
+                height={1356}
+                sizes="100vw"
+                quality={68}
+                priority
+                className="h-auto w-full object-contain"
+              />
+            )}
+            <ProjectDetailAside openProject={openProject} className={mobileAsideClass} />
+          </div>
+
+          {/* Desktop: unchanged centered treatment + floating card */}
           <div
-            style={{
-              position: "relative",
-              width: "100vw",
-              maxHeight: "100vh",
-              display: "grid",
-              placeItems: "center",
-            }}
+            className="relative hidden h-screen w-screen md:grid md:place-items-center"
+            style={{ width: "100vw", maxHeight: "100vh" }}
           >
             {openProject.spin3d ? (
               <div
                 style={{
                   display: "flex",
                   width: "100%",
-                  minHeight: "100vh",
+                  minHeight: "62vh",
                   alignItems: "center",
                   justifyContent: "center",
                   padding: "24px 16px",
@@ -154,6 +236,7 @@ export function StackingGallery() {
                 width={2105}
                 height={1356}
                 sizes="100vw"
+                quality={68}
                 style={{
                   width: "100vw",
                   maxHeight: "100vh",
@@ -162,48 +245,7 @@ export function StackingGallery() {
                 }}
               />
             )}
-            <aside
-              onClick={(event) => event.stopPropagation()}
-              style={{
-                position: "absolute",
-                right: "5%",
-                bottom: "3%",
-                width: "min(62vw, 520px)",
-                borderRadius: "24px",
-                background: "rgba(255,255,255,0.95)",
-                padding: "22px 26px 24px 26px",
-                color: "#111",
-              }}
-            >
-              <p style={{ margin: 0, textAlign: "center", fontSize: "13px", lineHeight: 1.1 }}>
-                {openProject.project?.title}
-              </p>
-              {openProject.project?.linkUrl ? (
-                <p style={{ margin: "4px 0 0 0", textAlign: "center", fontSize: "12px", lineHeight: 1.1 }}>
-                  <a
-                    href={openProject.project.linkUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ color: "#2458d3", textDecoration: "underline" }}
-                  >
-                    {openProject.project.linkLabel ?? openProject.project.linkUrl}
-                  </a>
-                </p>
-              ) : null}
-              <p style={{ margin: "12px 0 0 0", fontSize: "12px", lineHeight: 1.25 }}>
-                {openProject.project?.description}
-              </p>
-              <p style={{ margin: "18px 0 0 0", textAlign: "center", fontSize: "12px", lineHeight: 1.2 }}>
-                CREDITS
-              </p>
-              <div style={{ marginTop: "6px", display: "grid", gap: "2px" }}>
-                {openProject.project?.credits.map((line) => (
-                  <p key={line} style={{ margin: 0, fontSize: "12px", lineHeight: 1.2 }}>
-                    {line}
-                  </p>
-                ))}
-              </div>
-            </aside>
+            <ProjectDetailAside openProject={openProject} className={desktopAsideClass} />
           </div>
         </div>
       )}
