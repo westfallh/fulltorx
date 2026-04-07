@@ -21,37 +21,67 @@ export function StackingGallery() {
             height: "100vh",
             display: "flex",
             justifyContent: "center",
-            alignItems: "flex-start",
-            paddingTop: "8px",
+            alignItems: card.spin3d ? "center" : "flex-start",
+            paddingTop: card.spin3d ? "0" : "8px",
             marginTop: index === 0 ? "0" : "70vh",
           }}
         >
-          <button
-            type="button"
-            onClick={() => {
-              if (card.project) setOpenProjectId(card.id);
-            }}
-            style={{
-              all: "unset",
-              cursor: card.project ? "pointer" : "default",
-            }}
-          >
-            <Image
-              src={card.src ?? ""}
-              alt={card.alt ?? "Gallery image"}
-              width={1100}
-              height={760}
-              sizes="96vw"
-              style={{
-                width: "100vw",
-                maxWidth: "100vw",
-                maxHeight: "calc(100vh - 8px)",
-                height: "auto",
-                borderRadius: card.rounded ? "9999px" : undefined,
-                objectFit: "contain",
+          {card.spin3d ? (
+            <button
+              type="button"
+              onClick={() => {
+                if (card.project) setOpenProjectId(card.id);
               }}
-            />
-          </button>
+              style={{
+                all: "unset",
+                cursor: card.project ? "pointer" : "default",
+                display: "block",
+                width: "100%",
+              }}
+            >
+              <div
+                className="varsity-3d-stage flex w-full items-center justify-center"
+                style={{ minHeight: "calc(100vh - 8px)" }}
+              >
+                <div className="varsity-3d-spin flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={card.src ?? ""}
+                    alt={card.alt ?? ""}
+                    className="h-[min(52vh,520px)] w-auto max-w-[min(92vw,900px)] md:h-[min(58vh,600px)]"
+                    draggable={false}
+                  />
+                </div>
+              </div>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                if (card.project) setOpenProjectId(card.id);
+              }}
+              style={{
+                all: "unset",
+                cursor: card.project ? "pointer" : "default",
+              }}
+            >
+              <Image
+                src={card.src ?? ""}
+                alt={card.alt ?? "Gallery image"}
+                width={1100}
+                height={760}
+                sizes="96vw"
+                style={{
+                  width: "100vw",
+                  maxWidth: "100vw",
+                  maxHeight: "calc(100vh - 8px)",
+                  height: "auto",
+                  borderRadius: card.rounded ? "9999px" : undefined,
+                  objectFit: "contain",
+                }}
+              />
+            </button>
+          )}
         </article>
       ))}
       <div style={{ height: "100vh" }} />
@@ -78,19 +108,56 @@ export function StackingGallery() {
               placeItems: "center",
             }}
           >
-            <Image
-              src={openProject.src ?? ""}
-              alt={openProject.alt ?? "Project image"}
-              width={2105}
-              height={1356}
-              sizes="100vw"
-              style={{
-                width: "100vw",
-                maxHeight: "100vh",
-                height: "auto",
-                objectFit: "contain",
-              }}
-            />
+            {openProject.spin3d ? (
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  minHeight: "100vh",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "24px 16px",
+                }}
+              >
+                <div
+                  style={{
+                    background: "linear-gradient(160deg, #e8eefc 0%, #f4f6fb 50%, #dfe8fb 100%)",
+                    borderRadius: "28px",
+                    padding: "clamp(32px, 6vw, 72px) clamp(28px, 5vw, 64px)",
+                    boxShadow: "0 24px 60px rgba(15, 40, 90, 0.12)",
+                  }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={openProject.src ?? ""}
+                    alt={openProject.alt ?? "Varsity"}
+                    style={{
+                      display: "block",
+                      width: "auto",
+                      maxWidth: "min(88vw, 820px)",
+                      maxHeight: "min(72vh, 640px)",
+                      height: "auto",
+                      margin: "0 auto",
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
+              </div>
+            ) : (
+              <Image
+                src={openProject.src ?? ""}
+                alt={openProject.alt ?? "Project image"}
+                width={2105}
+                height={1356}
+                sizes="100vw"
+                style={{
+                  width: "100vw",
+                  maxHeight: "100vh",
+                  height: "auto",
+                  objectFit: "contain",
+                }}
+              />
+            )}
             <aside
               onClick={(event) => event.stopPropagation()}
               style={{
@@ -107,16 +174,18 @@ export function StackingGallery() {
               <p style={{ margin: 0, textAlign: "center", fontSize: "13px", lineHeight: 1.1 }}>
                 {openProject.project?.title}
               </p>
-              <p style={{ margin: "4px 0 0 0", textAlign: "center", fontSize: "12px", lineHeight: 1.1 }}>
-                <a
-                  href="https://meantimela.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ color: "#2458d3", textDecoration: "underline" }}
-                >
-                  MEANTIMELA.COM
-                </a>
-              </p>
+              {openProject.project?.linkUrl ? (
+                <p style={{ margin: "4px 0 0 0", textAlign: "center", fontSize: "12px", lineHeight: 1.1 }}>
+                  <a
+                    href={openProject.project.linkUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ color: "#2458d3", textDecoration: "underline" }}
+                  >
+                    {openProject.project.linkLabel ?? openProject.project.linkUrl}
+                  </a>
+                </p>
+              ) : null}
               <p style={{ margin: "12px 0 0 0", fontSize: "12px", lineHeight: 1.25 }}>
                 {openProject.project?.description}
               </p>

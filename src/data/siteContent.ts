@@ -10,7 +10,12 @@ export type GalleryCard = {
     title: string;
     description: string;
     credits: string[];
+    /** Shown under title; opens in new tab */
+    linkUrl?: string;
+    linkLabel?: string;
   };
+  /** In-place 3D spin (rotateY), no marquee */
+  spin3d?: boolean;
 };
 
 export const railItems = ["TO: HWSTFALL.COM", "2026 WORK"];
@@ -49,6 +54,8 @@ export const galleryCards: GalleryCard[] = [
       title: "MEANTIME 2026",
       description:
         "MEANTIME IS LEADING THE FAST LANE BY REIMAGINING WHAT ART GALLERIES SHOULD BE. INSTEAD OF STICKING TO ART THEY ARE RUNNING POP UPS FOR PEOPLE IN THE VINTAGE SPACE, AND EXPANDING WHAT A SPACE COULD BE USED FOR. I TOOK THIS ETHOS AND DESIGNED A WEB PRESENCE THAT EXPANDS ON IT.",
+      linkUrl: "https://meantimela.com",
+      linkLabel: "MEANTIMELA.COM",
       credits: [
         "WEB DESIGN AND DEVELOPMENT: HAYDEN WESTFALL",
         "GRAPHIC DESIGN AND BRAND IDENTITY: CAM GILLY",
@@ -65,10 +72,21 @@ export const galleryCards: GalleryCard[] = [
     maxWidthPx: 1400,
   },
   {
-    id: "salem-tees",
-    src: "/stack/SALEMTEES.jpg",
-    alt: "Salem Tees project artwork",
-    widthVw: 96,
-    maxWidthPx: 1400,
+    id: "varsity-3d",
+    src: "/varsity-logo.png",
+    alt: "Varsity",
+    widthVw: 100,
+    maxWidthPx: 9999,
+    spin3d: true,
+    project: {
+      title: "VARSITY",
+      description:
+        "WORK IN PROGRESS INTERFACE DESIGN AND DEVELOPMENT FOR VARSITY LOS ANGELES",
+        linkUrl: "https://varsity-web-ivory.vercel.app/",
+        linkLabel: "LINK",
+      credits: [
+        "WEB DESIGN AND DEVELOPMENT: HAYDEN WESTFALL",
+      ],
+    },
   },
 ];
