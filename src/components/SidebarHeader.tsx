@@ -65,7 +65,10 @@ export function SidebarHeader() {
                 padding: "3px 6px",
               }}
             >
-              TO: <a href="https://hwstfall.com" target="_blank" rel="noopener noreferrer">HWSTFALL.COM</a>
+              TO:{" "}
+              <a href="https://www.hwstfall.com/" target="_blank" rel="noopener noreferrer">
+                WWW.HWSTFALL.COM
+              </a>
             </h1>
           </div>
         </div>

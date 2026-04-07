@@ -82,8 +82,8 @@ export const galleryCards: GalleryCard[] = [
       title: "VARSITY",
       description:
         "WORK IN PROGRESS INTERFACE DESIGN AND DEVELOPMENT FOR VARSITY LOS ANGELES",
-        linkUrl: "https://varsity-web-ivory.vercel.app/",
-        linkLabel: "LINK",
+      linkUrl: "https://www.hwstfall.com/",
+      linkLabel: "WWW.HWSTFALL.COM",
       credits: [
         "WEB DESIGN AND DEVELOPMENT: HAYDEN WESTFALL",
       ],

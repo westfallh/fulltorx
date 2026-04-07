@@ -50,6 +50,8 @@ export function StackingGallery() {
                     alt={card.alt ?? ""}
                     className="h-[min(52vh,520px)] w-auto max-w-[min(92vw,900px)] md:h-[min(58vh,600px)]"
                     draggable={false}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>
@@ -70,7 +72,9 @@ export function StackingGallery() {
                 alt={card.alt ?? "Gallery image"}
                 width={1100}
                 height={760}
-                sizes="96vw"
+                sizes="100vw"
+                quality={68}
+                priority={index === 0}
                 style={{
                   width: "100vw",
                   maxWidth: "100vw",
