@@ -125,7 +125,7 @@ export function StackingGallery() {
                 height={760}
                 sizes="100vw"
                 quality={68}
-                priority={index === 0}
+                priority={index <= 2}
                 style={{
                   width: "100vw",
                   maxWidth: "100vw",
