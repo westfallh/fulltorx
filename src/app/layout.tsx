@@ -4,6 +4,26 @@ import { Roboto_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
+const inspectorMotif = ` 
+       @@@@@@@@@@@@@@        
+     @@@@@@@@@@@@@@@@@@@@     
+   @@@@@@@@@@@@@@@@@@  @@@@   
+  @@@@@@@@@@@@@@@@     @@@@@  
+ @@@    @@@@@@@      @@@@@@@@ 
+@@@@@     @@        @@@@@@@@@@
+@@@@@@              @@@@@@@@@@
+@@@                        @@@
+@@@                        @@@
+@@@@@@@@@@              @@@@@@
+@@@@@@@@@@@              @@@@@
+ @@@@@@@@@      @@@@@@@    @@ 
+  @@@@@@     @@@@@@@@@@@@@@@  
+   @@@@    @@@@@@@@@@@@@@@@   
+     @@@@@@@@@@@@@@@@@@@@     
+        @@@@@@@@@@@@@@        
+ 
+Design and Development By Hayden Westfall - www.hwstfall.com, www.fulltorx.com`;
+
 const robotoMono = Roboto_Mono({
   variable: "--font-roboto-mono",
   subsets: ["latin"],
@@ -37,6 +57,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${robotoMono.variable} ${korataki.variable} h-full antialiased`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.insertBefore(document.createComment(${JSON.stringify(inspectorMotif)}), document.documentElement.firstChild);`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         {children}
         <Analytics />

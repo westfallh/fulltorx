@@ -28,6 +28,35 @@ a {
   text-decoration: none;
 }
 
+.sidebar-rail {
+  --sidebar-rail-scale: 1;
+  transform: rotate(-90deg) scale(var(--sidebar-rail-scale));
+}
+
+@media (max-width: 900px) {
+  .sidebar-rail {
+    --sidebar-rail-scale: 0.9;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-rail {
+    --sidebar-rail-scale: 0.82;
+  }
+}
+
+@media (max-width: 640px) {
+  .sidebar-rail {
+    --sidebar-rail-scale: 0.72;
+  }
+}
+
+@media (max-width: 430px) {
+  .sidebar-rail {
+    --sidebar-rail-scale: 0.66;
+  }
+}
+
 /* Varsity stack slide: coin-style 3D spin in place */
 .varsity-3d-stage {
   perspective: 1400px;

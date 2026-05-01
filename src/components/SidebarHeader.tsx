@@ -4,15 +4,15 @@ export function SidebarHeader() {
       <aside className="fixed inset-y-0 left-0 z-40 w-[155px]">
         <div className="relative h-full">
           <div
+            className="sidebar-rail"
             style={{
               position: "absolute",
               left: "74px",
               bottom: "28px",
-              transform: "rotate(-90deg)",
               transformOrigin: "left bottom",
-              display: "grid",
-              gridTemplateColumns: "auto auto auto",
-              gap: "192px",
+              width: "calc((100vh - 56px) / var(--sidebar-rail-scale, 1))",
+              display: "flex",
+              justifyContent: "space-between",
               alignItems: "end",
               whiteSpace: "nowrap",
             }}
